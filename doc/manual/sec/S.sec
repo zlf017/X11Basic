@@ -1087,6 +1087,18 @@ DESCRIPTION:
 
 SEE ALSO: SUB, ADD()
 ##############################################################################
+Command:   SUBSCRIBE
+Syntax:    SUBSCRIBE topic$,value$,callback[,qos]
+
+DESCRIPTION:
+	Subscribes to a topic on the (mqtt) broker. You can optionally specify 
+	a quality of service value. When a message is received, its content 
+	will be stored in the global variable value$ and the procedure 
+	callback is excecuted.
+
+
+SEE ALSO: BROKER, PUBLISH
+##############################################################################
 Function: SUCC()
 Syntax:   a=SUCC(b)
 

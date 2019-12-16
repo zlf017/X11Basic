@@ -570,6 +570,16 @@ DESCRIPTION:
 
 SEE ALSO: POINT(),PLOT
 ##############################################################################
+Command: PUBLISH
+Syntax:  PUBLISH topic$,message$[,qos,retained]
+
+DESCRIPTION:
+
+	Publishes a message to the topic on a (mqtt) broker. You can optionally
+	specify the quality of service (0-2) and the retained-flag (0,1).
+	 
+SEE ALSO: BROKER, SUBSCRIBE
+##############################################################################
 Command: PUT
 Syntax:  PUT x,y,var$[,scale[,trans[,xs,ys,w,h],angle]]
 
