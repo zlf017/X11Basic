@@ -1641,7 +1641,7 @@ int msgarrvd(void *context, char *topicName, int topicLen, MQTTClient_message *m
     if(!strcmp(topicName,subscriptions[i].topic)) {
     // printf("Subscription found!\n");
       varcaststring(subscriptions[i].vnr,subscriptions[i].ptr,a);
-      {
+      if(subscriptions[i].procnr>=0) {
 	batch=1;
         int pc2=procs[subscriptions[i].procnr].zeile;
         if(stack_check(sp)) {stack[sp++]=pc;pc=pc2+1;}
@@ -1684,6 +1684,9 @@ static void mqtt_publish(char *topic, STRING payload, int qos, int retain) {
 
 static void mqtt_subscribe(char *topic,int qos) {
   MQTTClient_subscribe(client, topic, qos);
+}
+static void mqtt_unsubscribe(char *topic) {
+  MQTTClient_unsubscribe(client, topic);
 }
 void mqtt_exit() {
   /* free the subscription list */
@@ -1746,7 +1749,6 @@ void c_publish(PARAMETER *plist, int e) {
    reception.
    This currently can work with MQTT support.  
    
-   TODO: also allow unsubscribe. 
  */
 
 
@@ -1754,13 +1756,17 @@ void c_subscribe(PARAMETER *plist, int e) {
 #ifdef HAVE_MQTT
   int qos=0;  /* Quality of Service, default=0 */
   if(e>3) qos=plist[3].integer;
-  subscriptions[anzsubscription].ptr=plist[1].pointer;
-  subscriptions[anzsubscription].vnr=plist[1].integer;
-  subscriptions[anzsubscription].procnr=plist[2].integer;
-  subscriptions[anzsubscription].topic=strdup(plist[0].pointer);
-  anzsubscription++;
- 
-  mqtt_subscribe(plist[0].pointer, qos);
+  if(qos>=0) {
+    subscriptions[anzsubscription].ptr=plist[1].pointer;
+    subscriptions[anzsubscription].vnr=plist[1].integer;
+    if(plist[2].typ==0) subscriptions[anzsubscription].procnr=-1;
+    else subscriptions[anzsubscription].procnr=plist[2].integer;
+    subscriptions[anzsubscription].topic=strdup(plist[0].pointer);
+    anzsubscription++;
+    mqtt_subscribe(plist[0].pointer, qos);
+  } else { /* Unsubscribe */
+    mqtt_unsubscribe(plist[0].pointer);
+  }
 #else
   printf("MQTT support not compiled in.\n");
   xberror(9,"MQTT support");

@@ -3100,7 +3100,7 @@ const COMMAND comms[]= {
  { P_SIMPLE,	 "STOP"     , c_stop,       0,0},
  { P_PLISTE,	 "SUB"      , c_sub,        2,2,(unsigned short []){PL_NVAR,PL_NUMBER}},
  /* MQTT subscribe */
- { P_PLISTE,     "SUBSCRIBE", c_subscribe,  3,4,(unsigned short [])  {PL_STRING,PL_SVAR,PL_PROC,PL_NUMBER}},
+ { P_PLISTE,     "SUBSCRIBE", c_subscribe,  2,4,(unsigned short []){PL_STRING,PL_SVAR,PL_PROC,PL_NUMBER}},
  { P_PLISTE,	 "SWAP"     , c_swap,       2,2,(unsigned short []){PL_ALLVAR,PL_ALLVAR}},
  { P_PLISTE,	 "SYSTEM"   , c_system,     1,1,(unsigned short []){PL_STRING}},
 

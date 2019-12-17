@@ -20,9 +20,9 @@ SUBSCRIBE "TEMPERATURE",temp_var$,engine
 SUBSCRIBE "HUMIDITY",hum_var$,engine
 
 ' If you need contents of other topics but you have no need to trigger
-' on a change, you can just use an empty callback routine
+' on a change, you can just omit the callback routine
 
-SUBSCRIBE "SOMETHING",something_var$,dummy
+SUBSCRIBE "SOMETHING",something_var$
 
 
 ' It is very simple to publish something:
@@ -30,12 +30,12 @@ SUBSCRIBE "SOMETHING",something_var$,dummy
 PUBLISH "TIME",time$
 
 ' You can now enter an endless loop and so just react to the callbacks. 
-do
+DO
   PUBLISH "ACTIVITY",str$(i MOD 4)
-  inc i
+  INC i
   PAUSE 1
-  exit if cmd_var$="exit"
-loop
+  EXIT IF cmd_var$="exit"
+LOOP
 QUIT
 
 PROCEDURE callback
@@ -43,11 +43,7 @@ PROCEDURE callback
   print "result_var=";result_var$
 RETURN
 PROCEDURE cmd_callback
-  PRINT "cmd_callback trigered ";
-  print "cmd_var=";cmd_var$
-RETURN
-
-PROCEDURE DUMMY   ! Do nothing
+  PRINT "cmd_callback trigered: cmd_var=";cmd_var$
 RETURN
 
 ' This realizes a "rule". The input topics will trigger this. 
