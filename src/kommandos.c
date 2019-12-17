@@ -3026,7 +3026,7 @@ const COMMAND comms[]= {
  { P_PROC,       "PROCEDURE", c_end  ,      0,0},
  { P_IGNORE,     "PROGRAM"  , NULL  ,      0,0},
  /* Ausdruck als Message queuen oder per MQTT pushen */
- { P_PLISTE,     "PUBLISH"  , c_publish,   2,3, (unsigned short [])  {PL_STRING,PL_STRING,PL_NUMBER}},
+ { P_PLISTE,     "PUBLISH"  , c_publish,   2,4, (unsigned short [])  {PL_STRING,PL_STRING,PL_NUMBER,PL_NUMBER}},
 #ifndef NOGRAPHICS
  { P_PLISTE,     "PUT"  , c_put,      3,10,(unsigned short []){PL_INT,PL_INT,PL_STRING,PL_FLOAT,PL_INT,PL_INT,PL_INT,PL_INT,PL_INT,PL_FLOAT}},
 #endif

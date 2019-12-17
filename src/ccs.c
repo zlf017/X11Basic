@@ -1736,8 +1736,11 @@ void c_broker(PARAMETER *plist, int e) {
 void c_publish(PARAMETER *plist, int e) {
 #ifdef HAVE_MQTT
   int qos=0; /* Quality of Service, default=0 */
+  int retain=0; /* This is the default */
   if(e>2) qos=plist[2].integer;
-  mqtt_publish(plist[0].pointer, *((STRING *)&(plist[1].integer)), qos, 1);
+  if(qos==0) retain=1;
+  if(e>3) retain=(plist[3].integer!=0);
+  mqtt_publish(plist[0].pointer, *((STRING *)&(plist[1].integer)), qos, retain);
 #else
   printf("MQTT support not compiled in.\n");
   xberror(9,"MQTT support");

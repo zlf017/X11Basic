@@ -27,7 +27,7 @@ SUBSCRIBE "SOMETHING",something_var$
 
 ' It is very simple to publish something:
 
-PUBLISH "TIME",time$
+PUBLISH "TIME",time$,1,1
 
 ' You can now enter an endless loop and so just react to the callbacks. 
 DO
